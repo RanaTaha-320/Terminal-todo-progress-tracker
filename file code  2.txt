@@ -1,0 +1,85 @@
+class ToDoListApp:
+    def __init__(self):
+        self.tasks = []
+
+    def display_progress_bar(self):
+        total_tasks = len(self.tasks)
+        if total_tasks == 0:
+            print("\nProgress: [ No tasks available ] 0%")
+            return
+        completed_tasks = sum(1 for task in self.tasks if task["done"])
+        progress_ratio = completed_tasks / total_tasks
+        bar_length = 20
+        filled_length = int(round(bar_length * progress_ratio))
+        bar = '#' * filled_length + '-' * (bar_length - filled_length)
+        percentage = int(progress_ratio * 100)
+        print(f"\nProgress: |{bar}| {percentage}% ({completed_tasks}/{total_tasks} completed)")
+
+    def add_task(self):
+        task_text = input("\nEnter the task description: ").strip()
+        if task_text:
+            self.tasks.append({"text": task_text, "done": False})
+            print(f"Task '{task_text}' added successfully!")
+        else:
+            print("Error: Task cannot be empty.")
+
+    def view_tasks(self):
+        if not self.tasks:
+            print("\nYour to-do list is empty!")
+            return
+        print("\n--- Current To-Do List ---")
+        for index, task in enumerate(self.tasks, start=1):
+            status = "[DONE]" if task["done"] else "[PENDING]"
+            print(f"{index}. {task['text']} - {status}")
+
+    def complete_task(self):
+        self.view_tasks()
+        if not self.tasks: return
+        try:
+            choice = int(input("\nEnter the number of the task you completed: "))
+            if 1 <= choice <= len(self.tasks):
+                self.tasks[choice - 1]["done"] = True
+                print(f"Success: Marked task #{choice} as completed.")
+            else:
+                print("Error: Invalid task number.")
+        except ValueError:
+            print("Error: Please enter a valid number.")
+
+    def remove_task(self):
+        self.view_tasks()
+        if not self.tasks: return
+        try:
+            choice = int(input("\nEnter the number of the task to remove: "))
+            if 1 <= choice <= len(self.tasks):
+                removed = self.tasks.pop(choice - 1)
+                print(f"Removed task: '{removed['text']}'")
+            else:
+                print("Error: Invalid task number.")
+        except ValueError:
+            print("Error: Please enter a valid number.")
+
+    def run(self):
+        while True:
+            print("\n" + "="*36)
+            print("        TO-DO LIST APP           ")
+            print("====================================")
+            self.display_progress_bar()
+            self.view_tasks()
+            print("\nOptions:")
+            print("1. Add Task")
+            print("2. Mark Task as Completed")
+            print("3. Remove Task")
+            print("4. Exit")
+            choice = input("\nChoose an option (1-4): ").strip()
+            if choice == '1': self.add_task()
+            elif choice == '2': self.complete_task()
+            elif choice == '3': self.remove_task()
+            elif choice == '4':
+                print("\nGoodbye! Stay productive!")
+                break
+            else:
+                print("Error: Invalid option. Please try again.")
+
+if __name__ == "__main__":
+    app = ToDoListApp()
+    app.run()
