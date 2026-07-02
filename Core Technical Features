@@ -1,0 +1,7 @@
+Dynamic Visual Tracking: Features an auto-calculating ASCII progress bar (|#####---------------| 25%) that renders the completion ratio every time the interface refreshes.
+
+Complete CRUD Functionality: Supports basic task operations including creating tasks, viewing current workflows with statuses ([PENDING] / [DONE]), updating completion status, and deleting entries from list memory.
+
+State & Input Validation: Built-in exception handling safely filters empty string inputs and catches non-integer selections (ValueError), preventing the console application from crashing during unexpected user interactions.
+
+Clean Object-Oriented Architecture: Entirely encapsulated inside a standalone ToDoListApp class structure, making it incredibly straightforward to refactor, expand, or integrate into a graphical user interface (GUI) later on.
